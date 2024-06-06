@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}
+KH | 電影特區
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/cartoon.css">
+{% endblock %}
+
+{% block content %}
+
+	<div class="cartoon-title">
+		<div>
+			<h1>電影查詢</h1>
+
+
+			
+			<div class="content-filter-div">
+
+				<form action="" method="get">
+					<div>
+						<input type="text" name="get-title" class="search-title" value="{{title}}">
+						<button class="btn btn-primary" type="submit" value="查詢">查詢</button>
+					</div>
+
+					<label for="select-sort">排序方式</label>
+		        	<select class="form-select" id="select-sort" name="select-sort">
+			        	<option value="uid" {% if select == 'uid' %}selected{% endif %}>預設</option>
+			        	<optgroup label="評價">
+				        	<option value="evaluation_high" {% if select == 'evaluation_high' %}selected{% endif %}>評價 高 > 低</option>
+				        	<option value="evaluation_low" {% if select == 'evaluation_low' %}selected{% endif %}>評價 低 > 高</option>
+			        	</optgroup>
+			        	<optgroup label="日期">
+			        		<option value="news" {% if select == 'news' %}selected{% endif %}>日期 新 > 舊</option>
+			        		<option value="old" {% if select == 'old' %}selected{% endif %}>日期 舊 > 新</option>
+		        		</optgroup>
+
+			        </select>
+				</form>
+			</div>
+		
+
+		</div>
+
+	    <nav class="movie-filter">
+	        <hr>
+
+	        <ul class="filter">
+	            <li>年份：</li>
+	            <li><a href="/all_movie/?year=2022&get-title={{title}}&select-sort={{select}}">2022</a></li>
+	            <li><a href="/all_movie/?year=2021&get-title={{title}}&select-sort={{select}}">2021</a></li>
+	            <li><a href="/all_movie/?year=2020&get-title={{title}}&select-sort={{select}}">2020</a></li>
+	            <li><a href="/all_movie/?year=2019&get-title={{title}}&select-sort={{select}}">2019</a></li>
+	            <li><a href="/all_movie/?year=2018&get-title={{title}}&select-sort={{select}}">2018</a></li>
+	            <li><a href="/all_movie/?year=2017&get-title={{title}}&select-sort={{select}}">2017</a></li>
+	            <li><a href="/all_movie/?year=2016&get-title={{title}}&select-sort={{select}}">2016</a></li>
+	            <li><a href="/all_movie/?year=2015&get-title={{title}}&select-sort={{select}}">2015</a></li>
+	            <li><a href="/all_movie/?year=2014&get-title={{title}}&select-sort={{select}}">2014</a></li>
+	            <li><a href="/all_movie/?year=2013&get-title={{title}}&select-sort={{select}}">2013</a></li>
+	            <li><a href="/all_movie/?year=2012&get-title={{title}}&select-sort={{select}}">2012</a></li>
+	            <li><a href="/all_movie/?year=2011&get-title={{title}}&select-sort={{select}}">2011</a></li>
+	            <li><a href="/all_movie/?year=2010&get-title={{title}}&select-sort={{select}}">2010</a></li>
+	            <li><a href="/all_movie/?year=2009&get-title={{title}}&select-sort={{select}}">2009</a></li>
+	            <li><a href="/all_movie/?year=2008&get-title={{title}}&select-sort={{select}}">2008</a></li>
+
+	        </ul>
+
+	    </nav>
+
+	    
+	</div>
+	
+	<div class="cartoon">
+
+
+			{% if messages %}
+				{% for msg in messages %}
+						<div class="sendmsg">
+					<strong>{{ msg }}</strong>
+							</div>
+				{% endfor %}
+
+
+		{% else %}
+			{% for data in movies %}
+			<div class="content-div">
+				<a href="{{ data.link }}" target="_blank">
+					<div class="cartoon-img">
+						<img src="{{ data.img_link }}">
+					</div>
+
+					<div class="cartoon-text">
+						<p class="film-title">{{ data.title }}</p>
+						{% if data.evaluation == '' %}
+						<p>人氣：評價中</p>
+						{% else %}
+						<p>人氣：{{ data.evaluation }}★</p>
+						{% endif %}
+						<p>{{ data.date }}</p>
+					</div>
+
+				</a>
+			</div>
+			
+			{% endfor %}
+		{% endif %}
+	</div>
+
+
+	<div class="up-down">
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination justify-content-center">
+		    <li class="page-item">
+	      	{% if movies.has_previous %}
+		      <a class="page-link" href="?page={{ movies.previous_page_number }}&get-title={{title}}&year={{year}}&select-sort={{select}}" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		     {% endif %}
+		    </li>
+		    {% for i in nums %}
+		    	<li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}&get-title={{title}}&year={{year}}&select-sort={{select}}">{{ forloop.counter }}</a></li>
+		    {% endfor %}
+		    <li class="page-item">
+		    	{% if movies.has_next %}
+		      <a class="page-link" href="?page={{ movies.next_page_number }}&get-title={{title}}&year={{year}}&select-sort={{select}}">下一頁</a>
+		    	{% endif %}
+		    </li>
+		    <li class="page-item disabled"><a class="page-link">第{{ venues.number }}頁 | 共{{ venues.paginator.num_pages }}頁</a></li>
+		  </ul>
+		</nav>
+	</div>
+
+	
+
+	
+
+
+	
+
+
+
+{% endblock %}

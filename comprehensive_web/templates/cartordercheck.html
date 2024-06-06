@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block Title %}	
+KH | 訂單明細
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/cartordercheck.css">
+{% endblock %}
+
+
+{% block content %}
+
+	<div style="margin-top: 50px"></div>
+
+	<div id="maindiv">
+		
+
+		{% if nosearch == 1 %}
+			<form action="/cartordercheck/" method="post">
+				{% csrf_token %}
+				<p class="order-check-title"><strong>訂單查詢</strong></p>
+				<table class="table table-dark" border="0" align="center" cellpadding="10" cellspacing="0">
+					<tr>
+						<td>訂單編號</td>
+						<td><input type="number" name="orderid" required></td>
+					</tr>
+
+					<tr>
+						<td>電子郵件</td>
+						<td><input name="customemail" type="text" value="{{customemail}}" required></td>
+					</tr>
+
+					<tr>
+						<td colspan="2"><button class="btn btn-primary" type="submit" value="查詢">查詢</button></td>
+					</tr>
+				</table>
+			</form>
+
+		{% else %}
+
+			{% if notfound == 1 %}
+			    {% if messages %}
+			      {% for message in messages %}        
+			        <div class="alert alert-warning alert-dismissible fade show prompt-msg" role="alert">
+					  <strong>{{message}}!</strong>
+					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+			      {% endfor %}
+			    {% endif %}
+				<!-- <div class="message">對不起，找不到您的訂單資料，請重新查詢</div> -->
+			
+				<form action="/cartordercheck/" method="get">
+					<p class="order-check-title">訂單查詢</p>
+					<table class="table table-dark" border="0" align="center" cellpadding="10" cellspacing="0">
+						<tr>
+							<td style="color: #fff">訂單編號</td>
+							<td><input type="text" name="orderid" required></td>
+						</tr>
+
+						<tr>
+							<td>電子郵件</td>
+							<td><input name="customemail" type="text" required></td>
+						</tr>
+
+						<tr>
+							<td colspan="2"><input type="submit" value="查詢"></td>
+						</tr>
+					</table>
+				</form>
+
+			{% else %}
+				<h1>訂單資料</h1>
+				<div class="order-Details">
+					<p class="subject">訂單編號：<font colro="#ff0000">{{ orderid }}</font></p>
+
+					<table class="table table-dark" width="90%" border="0" align="center" cellpadding="4" cellsapcing="1">
+						<tr>
+							<th align="center" bgcolor="#cccccc">商品名稱</th>
+							<th width="80" algine="center" bgcolor="#cccccc">單價</th>
+							<th width="80" algine="center" bgcolor="#cccccc">數量</th>
+							<th width="80" algine="center" bgcolor="#cccccc">金額</th>
+						</tr>
+
+						{% for unit in details %}
+							<tr>
+								<td align="center">{{unit.pname}}</td>
+								<td align="center">{{unit.unitprice}}</td>
+								<td align="center">{{unit.quantity}}</td>
+								<td align="center">{{unit.dtotal}}</td>
+							</tr>
+						{% endfor %}
+
+						<tr>
+							<td colspan="3" align="left"><strong>小計</strong></td>
+							<td width="150" align="center"><strong>${{order.subtotal}}</strong></td>
+						</tr>
+
+						<tr>
+							<td colspan="3" align="left"><strong>運費</strong></td>
+							<td width="150" align="center"><strong>$100</strong></td>
+						</tr>
+
+						<tr>
+							<td colspan="3" align="left"><strong>總額</strong></td>
+							<td width="150" align="center" style="color: red;"><strong>${{order.total_amount}}</strong></td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="order-Details">
+					<p class="subject">客戶資料</p>
+					<table class="table table-dark" width="90%" border="0" align="center" cellpadding="4" cellspacing="1">
+						<tr>
+							<td width="100" align="cneter" bgcolor="#cccccc"><strong>姓名</strong></td>
+							<td bgcolor="#ffffff" align="center">{{ order.customername }}</td>
+						</tr>
+
+						<tr>
+							<td width="100" align="cneter" bgcolor="#cccccc"><strong>電話</strong></td>
+							<td bgcolor="#ffffff" align="center">{{ order.customerphone }}</td>
+						</tr>
+
+						<tr>
+							<td width="100" align="cneter" bgcolor="#cccccc"><strong>地址</strong></td>
+							<td bgcolor="#ffffff" align="center">{{ order.customeraddress }}</td>
+						</tr>
+
+						<tr>
+							<td width="100" align="cneter" bgcolor="#cccccc"><strong>Email</strong></td>
+							<td bgcolor="#ffffff" align="center">{{ order.customeremail }}</td>
+						</tr>
+						
+					</table>
+				</div>
+
+			{% endif %}
+
+		{% endif %}
+
+
+	</div>
+{% endblock %}
