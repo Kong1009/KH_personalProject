@@ -1,0 +1,19 @@
+html, body, h1, h2, h3, h4, h5, h6, div, a, ul, li, image, span{
+    margin:0 ;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    color: inherit;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    font-size: inherit;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+img{
+    width: 100%;
+    vertical-align: bottom;
+}
