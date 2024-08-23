@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+KH | 會員管理
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/member.css">
+{% endblock %}
+
+
+
+{% block content %}
+	
+	
+	<div class="member-div">
+		<h1><strong>會員管理</strong></h1>
+	  <div class="mb-3 row ">
+	    <label for="staticEmail" class="col-sm-2 col-form-label member-content">會員名稱</label>
+	    <div class="col-sm-10">
+	      <input type="text" readonly class="form-control-plaintext member-content" id="staticEmail" value="{{ data.username }}">
+	    </div>
+	  </div>
+
+	  <div class="mb-3 row">
+	    <label for="staticEmail" class="col-sm-2 col-form-label member-content">會員Email</label>
+	    <div class="col-sm-10">
+	      <input type="text" readonly class="form-control-plaintext member-content" id="staticEmail" value="{{ data.email }}">
+	    </div>
+	  </div>
+
+	  <div class="mb-3 row">
+	    <h3><strong>變更密碼</strong></h3>
+
+	  </div>
+	  <form action="" method="post">
+	  	{% csrf_token %}
+		  <div class="mb-3 row">
+		    <label for="inputPassword" class="col-sm-2 col-form-label member-content">舊密碼</label>
+		    <div class="col-sm-10">
+		      <input type="password" class="form-control member-content" name="old_password" id="inputPassword">
+		    </div>
+		  </div>
+
+	  	  <div class="mb-3 row">
+		    <label for="inputPassword" class="col-sm-2 col-form-label member-content">新密碼</label>
+		    <div class="col-sm-10">
+		      <input type="password" class="form-control member-content" name="new_password" id="inputPassword">
+		    </div>
+		  </div>
+
+		  <div class="mb-3 row">
+		    <button type="submit" class="btn btn-warning">變更密碼</button>
+		  </div>
+
+
+	  </form>
+	  <div id="member-msg"><strong>{{ msg }}</strong></div>
+	</div>       
+
+{% endblock %}

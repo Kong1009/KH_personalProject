@@ -1,0 +1,36 @@
+.member-div{
+	width: 30%;
+	margin:60px auto;
+	padding: 50px;
+	background: #8680F7;
+	border-radius: 10px;
+
+}
+
+
+
+.member-setting{
+	width: 20%;
+}
+
+
+#title{
+	border-bottom: 2px solid;
+}
+
+.member-content{
+	font-size: 20px;
+	width: 100%;
+	font-weight: bold;
+
+}
+
+#member-msg{
+	font-size: 30px;
+	text-align: center;
+	color: red;
+}
+
+.mb-3{
+	padding: 18px 0;
+}
